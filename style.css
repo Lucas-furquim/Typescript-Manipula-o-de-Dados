@@ -1,0 +1,22 @@
+.dados ul {
+  padding: 0px;
+  list-style: none;
+}
+
+.dados ul li:nth-child(odd) {
+  background-color: rgb(233, 233, 233);
+}
+
+.dados li {
+  padding: 5px;
+  margin: 5px 0px;
+}
+
+.dadosInfo {
+  font-size: 1.8rem;
+}
+
+.dados div {
+  display: grid;
+  grid-template-columns: 0.8fr 1fr 0.6fr 1fr 1fr;
+}

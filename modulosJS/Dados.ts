@@ -9,12 +9,11 @@ interface Clientes {
   'Valor (R$)': string;
 }
 
-async function fetchProduto() {
+export async function fetchProduto() {
   const response = await fetch('https://api.origamid.dev/json/transacoes.json');
   const json = await response.json();
   return mostraDados(json);
 }
-fetchProduto();
 
 async function mostraDados(clientes: unknown) {
   if (Array.isArray(clientes)) {

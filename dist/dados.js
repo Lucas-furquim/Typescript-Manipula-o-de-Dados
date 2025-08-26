@@ -1,10 +1,8 @@
-"use strict";
-async function fetchProduto() {
+export async function fetchProduto() {
     const response = await fetch('https://api.origamid.dev/json/transacoes.json');
     const json = await response.json();
     return mostraDados(json);
 }
-fetchProduto();
 async function mostraDados(clientes) {
     if (Array.isArray(clientes)) {
         const dados = document.querySelector('.dados');
@@ -68,4 +66,4 @@ function isClientes(cliente) {
         return false;
     }
 }
-//# sourceMappingURL=script.js.map
+//# sourceMappingURL=Dados.js.map

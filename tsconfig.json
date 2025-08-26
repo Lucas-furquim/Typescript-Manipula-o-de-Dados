@@ -1,11 +1,15 @@
 {
   "compilerOptions": {
     "target": "ESNext",
+    "module": "ESNext", // precisa para usar import/export
+    "moduleResolution": "Node", // resolve imports de forma moderna
     "sourceMap": true,
     "allowJs": true,
     "removeComments": true,
     "strict": true,
     "noImplicitReturns": true,
+    "outDir": "dist",
     "isolatedModules": true
-  }
+  },
+  "include": ["modulosJS/**/*"] // compila só sua pasta de .ts
 }

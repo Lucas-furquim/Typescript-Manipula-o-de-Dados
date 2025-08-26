@@ -53,7 +53,6 @@ function manipulaDados(clientes: unknown, tipo: keyof Clientes) {
     return clientes
       .map((cliente) => {
         if (isClientes(cliente)) {
-          console.log(cliente[tipo]);
           return `<li>R$ ${cliente[tipo]}</li>`;
         }
         return '';

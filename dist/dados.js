@@ -40,7 +40,6 @@ function manipulaDados(clientes, tipo) {
         return clientes
             .map((cliente) => {
             if (isClientes(cliente)) {
-                console.log(cliente[tipo]);
                 return `<li>R$ ${cliente[tipo]}</li>`;
             }
             return '';

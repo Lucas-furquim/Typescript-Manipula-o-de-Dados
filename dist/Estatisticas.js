@@ -1,3 +1,12 @@
+const diasSemana = {
+    segunda: 0,
+    terca: 0,
+    quarta: 0,
+    quinta: 0,
+    sexta: 0,
+    sabado: 0,
+    domingo: 0,
+};
 let somaTotal = 0;
 let somaCartão = 0;
 let somaBoleto = 0;
@@ -18,6 +27,7 @@ function MostraDados(clientes) {
                 const formataValor = retornaTotal(cliente);
                 retornaCartão(cliente);
                 Pagamentos(cliente);
+                const diaMaior = diasdaSemana(cliente);
                 if (esta) {
                     esta.innerHTML = `
             <div>
@@ -38,7 +48,9 @@ function MostraDados(clientes) {
            <p> Estornada: ${estornada}</p>
               </div>
 
-
+             <div class='diaMaisVenda'>
+            O dia com mais vendas: ${diaMaior}
+              </div>
 
             </div>
             `;
@@ -46,6 +58,34 @@ function MostraDados(clientes) {
             }
         });
     }
+}
+function diasdaSemana(cliente) {
+    let data = cliente['Data'].split(' ')[0];
+    let [dia, mes, ano] = data.split('/');
+    const datas = new Date(+ano, +mes - 1, +dia).toString();
+    if (datas.slice(0, 3) === 'Thu') {
+        diasSemana.quinta += 1;
+    }
+    else if (datas.slice(0, 3) === 'Fri') {
+        diasSemana.sexta += 1;
+    }
+    else if (datas.slice(0, 3) === 'Sat') {
+        diasSemana.sabado += 1;
+    }
+    else if (datas.slice(0, 3) === 'Mon') {
+        diasSemana.segunda += 1;
+    }
+    else if (datas.slice(0, 3) === 'Sun') {
+        diasSemana.domingo += 1;
+    }
+    else if (datas.slice(0, 3) === 'Wed') {
+        diasSemana.quarta += 1;
+    }
+    else if (datas.slice(0, 3) === 'Tue') {
+        diasSemana.terca += 1;
+    }
+    const [diaMaior, valorMaior] = Object.entries(diasSemana).reduce((maior, atual) => (atual[1] > maior[1] ? atual : maior));
+    return diaMaior;
 }
 function Pagamentos(cliente) {
     if (cliente.Status === 'Paga') {

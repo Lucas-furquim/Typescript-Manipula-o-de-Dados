@@ -1,41 +1,88 @@
+let somaTotal = 0;
+let somaCartão = 0;
+let somaBoleto = 0;
+let paga = 0;
+let recusada = 0;
+let aguardando = 0;
+let estornada = 0;
 export async function fetchProdutoEstatisticas() {
     const response = await fetch('https://api.origamid.dev/json/transacoes.json');
     const json = await response.json();
     return MostraDados(json);
 }
 function MostraDados(clientes) {
-    let soma = 0;
     const esta = document.querySelector('.estatisticas');
     if (Array.isArray(clientes)) {
         clientes.map((cliente) => {
             if (isClientes(cliente)) {
-                if (cliente['Valor (R$)'] !== '-') {
-                    let transforma = cliente['Valor (R$)']
-                        .replace('.', '')
-                        .replace(',', '.');
-                    soma += +transforma;
-                    const formataValor = soma.toLocaleString('pt-BR', {
-                        style: 'currency',
-                        currency: 'BRL',
-                    });
-                    if (esta) {
-                        esta.innerHTML = `
+                const formataValor = retornaTotal(cliente);
+                retornaCartão(cliente);
+                Pagamentos(cliente);
+                if (esta) {
+                    esta.innerHTML = `
             <div>
             <h1>Estatisticas</h1>
              <div class='total'>
             Total: ${formataValor}
               </div>
 
+            <div class='pagamento'>
+            <p>Cartão de Crédito: ${somaCartão}</p>
+           <p> Boleto: ${somaBoleto}</p>
+              </div>
 
+            <div class='status'>
+           <p> Paga: ${paga}</p>
+           <p> Recusada pela operadora de cartão: ${recusada}</p>
+           <p> Aguardando Pagamento: ${aguardando}</p>
+           <p> Estornada: ${estornada}</p>
+              </div>
 
 
 
             </div>
             `;
-                    }
                 }
             }
         });
+    }
+}
+function Pagamentos(cliente) {
+    if (cliente.Status === 'Paga') {
+        paga += 1;
+    }
+    else if (cliente['Status'] === 'Aguardando pagamento') {
+        aguardando += 1;
+    }
+    else if (cliente['Status'] === 'Recusada pela operadora de cartão') {
+        recusada += 1;
+    }
+    else {
+        estornada += 1;
+    }
+}
+function retornaCartão(cliente) {
+    if (cliente['Forma de Pagamento'] === 'Cartão de Crédito') {
+        somaCartão += 1;
+        return somaCartão;
+    }
+    else {
+        somaBoleto += 1;
+        return somaBoleto;
+    }
+}
+function retornaTotal(cliente) {
+    if (cliente['Valor (R$)'] !== '-') {
+        let transforma = cliente['Valor (R$)'].replace('.', '').replace(',', '.');
+        somaTotal += +transforma;
+        const formataValor = somaTotal.toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+        });
+        return formataValor;
+    }
+    else {
+        return '';
     }
 }
 function isClientes(cliente) {

@@ -1,3 +1,7 @@
+.estatisticas p {
+  margin: 15px 0px;
+}
+
 .dados ul {
   padding: 0px;
   list-style: none;
@@ -19,4 +23,8 @@
 .dados div {
   display: grid;
   grid-template-columns: 0.7fr 0.9fr 0.4fr 0.7fr 1fr;
+}
+
+.estatisticas .status {
+  border-top: 4px solid rgb(233, 233, 233);
 }
